@@ -1,0 +1,156 @@
+/* we start with getting an overview of the Data */
+
+proc sql outobs=20;
+
+select *
+from work.import;
+
+quit;
+
+/* Let's see how the people with the highest income are responding to our campaign and how much they spend on our products */
+
+proc sql outobs=10;
+
+select 
+	Income,
+	MntWines,
+	MntFruits,
+	MntMeatProducts,
+	MntFishProducts,
+	MntSweetProducts,
+	MntGoldProds,
+	AcceptedCmpOverall
+from work.import
+order by income desc;
+
+quit;
+
+/* As this is a sample Dataset, let us assume that the person with the highest Income is just interested in our 
+sweet products as this can be possible
+
+now we want to see how the 10 households with the least amount of income are behaving */
+
+proc sql outobs=10;
+
+select 
+	Income,
+	MntWines,
+	MntFruits,
+	MntMeatProducts,
+	MntFishProducts,
+	MntSweetProducts,
+	MntGoldProds,
+	AcceptedCmpOverall
+from work.import
+order by income;
+
+quit;
+
+/* Something is not right. 
+In Row 2 we can see that in the Column MntMeatProducts the household with the second-lowest income is buying
+more than nearly everyone else in 2 years.
+
+After looking up the Data, there was a mistake. We should replace the value with the correct one "5" */
+
+proc sql;
+
+update work.import
+set MntMeatProducts = 5
+where Income=2447.0;
+
+quit;
+
+/* Now we have the correct value, as we have no Primary Key in this Dataset I made sure to pick out a value that was unique, 
+not typical but as this is a Dataset i am only using for this Project this should be appropriate
+
+let's see in which age group we got the most acceptance for our campaign  */
+
+proc sql;
+
+select case 
+	when Age >=0 and Age <= 45 Then 'Agegroup A'
+	Else 'Agegroup B'
+	End AS Agegroup,
+	SUM(AcceptedCmpOverall)
+from work.import
+group by Agegroup;
+
+quit;
+
+/* With this query, we can see that people in the Age group 45 or above have a higher acceptance for our campaign.
+Maybe we can change the concept of the Cmp to address a younger target group, 
+as there seems to be a big group that we can still convince
+
+after getting used to the Dataset, we want to see how the Campaign helped our Purchases and create a view Table */
+
+proc sql;
+
+create view CmpSuccess AS
+select 
+	COUNT(*) AS Participant,
+	AcceptedCmpOverall,
+	SUM(NumCatalogPurchases) AS CatalogTotal,
+	SUM(NumDealsPurchases) AS DealsTotal,
+	SUM(NumStorePurchases) AS StoreTotal,
+	SUM( NumWebPurchases) as WebTotal,
+	SUM(Calculated CatalogTotal,Calculated DealsTotal,Calculated StoreTotal,Calculated WebTotal) AS Total,
+	SUM(NumWebVisitsMonth) as VisitOverallLastMonth
+from work.import
+group by AcceptedCmpOverall
+order by AcceptedCmpOverall desc;
+
+quit;
+
+proc sql;
+
+Select *
+from work.cmpsuccess;
+
+select 
+	AcceptedCmpOverall,
+	TOTAL/Participant AS AVGPurchases,
+	VisitOverallLastMonth/Total AS AVGWebvisit
+from work.cmpsuccess
+group by  AcceptedCmpOverall
+order by AcceptedCmpOverall desc;
+
+quit;
+
+/* Here we can think about what the result might mean.
+Even though we got the most Website visits from potential Customer that did not accept our Cmp, 
+we have the least Amount of AVG Purchases.
+
+This could have a lot of reasons, the most common would be that some people had to visit our Webshop more often to 
+see if they can find something that they need or that the navigation through our website is not optimized for new visits.
+
+Something we should also note is that the people that took part in two, three and four Cmp had a similar AVG in Purchase.
+
+Now we will create a view Table with the SAS Language */
+
+Data Category(KEEP=Age Income Category);
+
+set work.import;
+
+if AcceptedCmp1 = 1 Then Category =  1;
+else if AcceptedCmp2 =1 Then Category = 2;
+else if AcceptedCmp3 =1 Then Category = 3;
+else if AcceptedCmp4 =1 Then Category = 4;
+else if AcceptedCmp5 =1 Then Category = 5;
+else Category = 0;
+
+run;
+
+/* We will Group the Category to get a better overview on the AVG Income and AVG Age from our customers that 
+either got not effected by one of our 5 Cmp or how they behaved depending on which Cmp they participate. */
+
+proc sql;
+
+select 
+	COUNT(*),category,
+	avg(Income) as Income,
+	avg(Age) as Age
+from work.category
+group by category
+order by category desc;
+
+quit;
