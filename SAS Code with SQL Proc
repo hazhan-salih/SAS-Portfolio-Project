@@ -117,13 +117,18 @@ order by AcceptedCmpOverall desc;
 quit;
 
 /* Here we can think about what the result might mean.
-Even though we got the most Website visits from potential Customer that did not accept our Cmp, 
-we have the least Amount of AVG Purchases.
 
-This could have a lot of reasons, the most common would be that some people had to visit our Webshop more often to 
+Even though we got the most Website visits from potential Customer that did not accept any of our Cmp, 
+we have the least Amount of Purchases per person.
+
+This could have a lot of reasons, the most common would be that the AVG Person had to visit our Webshop more often to 
 see if they can find something that they need or that the navigation through our website is not optimized for new visits.
 
-Something we should also note is that the people that took part in two, three and four Cmp had a similar AVG in Purchase.
+Something we should also note is that the people that took part in two, three and four Cmp had a similar Purchase per Person and the Webvisit in the last Month
+got reduced by a lot.
+
+what we can deduct from this is that the People taking Part in our Cmp are Buying on AVG more per Person and but are likely visiting our Webshop than when they know 
+what they want to buy.
 
 Now we will create a view Table with the SAS Language */
 
