@@ -108,8 +108,8 @@ from work.cmpsuccess;
 
 select 
 	AcceptedCmpOverall,
-	TOTAL/Participant AS AVGPurchases,
-	VisitOverallLastMonth/Total AS AVGWebvisit
+	TOTAL/Participant AS PurchasesPPerson,
+	VisitOverallLastMonth/Total AS WebvisitPPerson
 from work.cmpsuccess
 group by  AcceptedCmpOverall
 order by AcceptedCmpOverall desc;
