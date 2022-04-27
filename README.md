@@ -1,5 +1,10 @@
 # SAS-Portfolio-Project
-This is a Basic SAS Portfolio Project
+
+This is a Basic SAS Portfolio Project to familiarize with the software.
+
+if you import the code in SAS there may be some formatting problems in the result Tables.
+
+The result Table is just to show the result without running it in SAS.
 
 Dataset Overview
 The dataset for this project is provided by Dr. Omar Romero-Hernandez. 
