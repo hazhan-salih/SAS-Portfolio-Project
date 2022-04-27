@@ -27,6 +27,25 @@ order by income desc;
 
 quit;
 
+/* 
+
+Result:
+							Top 10 Highest income
+
+	Income	MntWines	MntFruits	MntMeatProducts	MntFishProducts	MntSweetProducts	MntGoldProds	AcceptedCmpOverall
+	113734	6		2		3		1		262			3		0
+	105471	1009		181		104		202		21			207		2
+	102692	168		148		444		32		172			148		4
+	102160	763		29		138		76		176			58		3
+	101970	722		27		102		44		72			168		3
+	98777	1000		19		711		125		115			38		1
+	96876	908		43		735		40		194			21		3
+	96843	448		71		951		40		17			17		1
+	96547	448		21		125		52		101			62		3
+	95529	770		29		890		250		27			24		1
+	
+*/
+
 /* As this is a sample Dataset, let us assume that the person with the highest Income is just interested in our 
 sweet products as this can be possible
 
@@ -64,6 +83,26 @@ where Income=2447.0;
 
 quit;
 
+/* 
+
+Result if you run above query:
+
+						Top 10 lowest income							
+							
+	Income	MntWines	MntFruits	MntMeatProducts	MntFishProducts	MntSweetProducts	MntGoldProds	AcceptedCmpOverall
+	1730	1		1		3		1		1			1		0
+	2447	1		1		5		1		1			1		0
+	3502	2		1		1		0		0			1		0
+	4023	5		0		1		1		1			1		0
+	4428	16		4		12		2		4			321		0
+	4861	2		1		1		1		0			1		0
+	5305	12		4		7		1		3			5		0
+	5648	28		0		6		1		1			13		1
+	6560	67		11		26		4		3			262		0
+	6835	107		2		12		2		2			12		0
+
+*/
+
 /* Now we have the correct value, as we have no Primary Key in this Dataset I made sure to pick out a value that was unique, 
 not typical but as this is a Dataset i am only using for this Project this should be appropriate
 
@@ -77,11 +116,22 @@ select case
 	when Age >=0 and Age <= 45 Then 'Agegroup A'
 	Else 'Agegroup B'
 	End AS Agegroup,
-	SUM(AcceptedCmpOverall)
+	SUM(AcceptedCmpOverall) AS AccptdCampaign
 from work.import
 group by Agegroup;
 
+
 quit;
+
+/* 
+
+Result:
+				Agegroup Response
+
+				Agegroup	AccptdCampaign	 
+				Agegroup A	234
+				Agegroup B	425
+*/
 
 /* With this query, we can see that people in the Age group 45 or above have a higher acceptance for our campaign.
 Maybe we can change the concept of the Cmp to address a younger target group, 
@@ -124,6 +174,31 @@ order by AcceptedCmpOverall desc;
 
 quit;
 
+/*
+
+Result:
+
+							Campaign success
+
+	Participant	AcceptedCmpOverall	CatalogTotal	DealsTotal	StoreTotal	WebTotal	Total	VisitOverallLastMonth
+	11		4			76		8		91		56		231	43
+	44		3			283		49		350		247		929	148
+	81		2			443		135		645		452		1675	323
+	321		1			1239		722		2109		1635		5705	1648
+	1747		0			3786		4198		9637		6648		24269	9605
+
+
+							Campaign success
+
+				AcceptedCmpOverall	PurchasesPPerson	WebvisitPPerson
+				4			21			0.186147
+				3			21.11364		0.159311
+				2			20.67901		0.192836
+				1			17.77259		0.288869
+				0			13.89181		0.395772
+
+*/
+
 /* Here we can think about what the result might mean.
 
 Even though we got the most Website visits from potential Customer that did not accept any of our Cmp, 
@@ -159,7 +234,7 @@ either got not effected by one of our 5 Cmp or how they behaved depending on whi
 proc sql;
 
 select 
-	COUNT(*),category,
+	COUNT(*) ,category,
 	avg(Income) as Income,
 	avg(Age) as Age
 from work.category
@@ -167,3 +242,18 @@ group by category
 order by category desc;
 
 quit;
+
+/*
+
+Result:
+
+
+			Pplcount	Category	Income		Age
+			57		5		81674.16	51.87719
+			106		4		63694.92	55.32075
+			135		3		45081.66	48.91111
+			17		2		63351.71	53.17647
+			142		1		78872.63	51.61972
+			1747		0		48058.35	50.91471
+			
+*/
