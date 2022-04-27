@@ -277,3 +277,15 @@ Result:
 			1747		0		48058.35	50.91471
 			
 */
+
+/* From this table, we can see in which income group and Age group the customer that accepted either zero or all 5 Campaigns we started (Column Category).
+
+What we can see first is that the least amount of people accepted only 2 Campaigns.
+
+We can find the customer with the highest AVG Income by the customer that accepted all 5 of our campaigns.
+
+The youngest AVG Age group can be found by the customer that accepted 3 Campaigns, but also the customer with the lowest AVG Income.
+
+What we can also see in this Table is that overall our general customer group is on AVG between 55 - 48 this, so there is also high customer base we can still target
+
+and maybe increase our revenue. */
