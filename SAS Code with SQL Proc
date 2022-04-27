@@ -254,7 +254,7 @@ either got not effected by one of our 5 Cmp or how they behaved depending on whi
 proc sql;
 
 select 
-	COUNT(*) ,category,
+	COUNT(*) AS Pplcount ,category,
 	avg(Income) as Income,
 	avg(Age) as Age
 from work.category
