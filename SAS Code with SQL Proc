@@ -11,6 +11,8 @@ quit;
 
 proc sql outobs=10;
 
+title 'Top 10 Highest income';
+
 select 
 	Income,
 	MntWines,
@@ -31,6 +33,8 @@ sweet products as this can be possible
 now we want to see how the 10 households with the least amount of income are behaving */
 
 proc sql outobs=10;
+
+title 'Top 10 lowest income';
 
 select 
 	Income,
@@ -67,6 +71,8 @@ let's see in which age group we got the most acceptance for our campaign  */
 
 proc sql;
 
+Title 'Agegroup Response';
+
 select case 
 	when Age >=0 and Age <= 45 Then 'Agegroup A'
 	Else 'Agegroup B'
@@ -102,6 +108,8 @@ order by AcceptedCmpOverall desc;
 quit;
 
 proc sql;
+
+Title 'Campaign success';
 
 Select *
 from work.cmpsuccess;
