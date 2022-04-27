@@ -198,7 +198,7 @@ quit;
 
 Result:
 
-							Campaign success
+							Campaign success by Total purchase
 
 	Participant	AcceptedCmpOverall	CatalogTotal	DealsTotal	StoreTotal	WebTotal	Total	VisitOverallLastMonth
 	11		4			76		8		91		56		231	43
@@ -208,7 +208,7 @@ Result:
 	1747		0			3786		4198		9637		6648		24269	9605
 
 
-							Campaign success
+							Campaign success summed up
 
 				AcceptedCmpOverall	PurchasesPPerson	WebvisitPPerson
 				4			21			0.186147
