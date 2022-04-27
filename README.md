@@ -12,6 +12,7 @@ It is licensed as CC0: Public Domain, which states,
 “You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission”
 
 Dataset Column definition
+
 ID: Customer’s unique identifier
 Year_Birth: Customer’s birth year
 Education: Customer’s education level
